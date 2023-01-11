@@ -1,7 +1,9 @@
-package com.faris.newsapp
+package com.faris.newsapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.faris.newsapp.BuildConfig
+import com.faris.newsapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
