@@ -2,6 +2,7 @@ package com.faris.newsapp.ui.search
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.faris.newsapp.R
@@ -18,6 +19,11 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         _binding = FragmentSearchBinding.bind(view)
 
         with(binding) {
+
+            searchEditText.doAfterTextChanged {
+                searchButton.isEnabled = it.toString().isNotEmpty()
+            }
+
             searchButton.setOnClickListener {
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToArticlesFragment(searchInput = searchEditText.text.toString()))
             }
