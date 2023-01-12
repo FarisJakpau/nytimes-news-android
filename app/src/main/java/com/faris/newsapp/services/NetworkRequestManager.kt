@@ -1,5 +1,6 @@
 package com.faris.newsapp.services
 
+import android.util.Log
 import com.faris.newsapp.models.AppError
 import retrofit2.Response
 import com.faris.newsapp.models.Result
@@ -33,6 +34,6 @@ class NetworkRequestManager {
     }
 
     fun <T> getAppError(response: Response<T>): AppError {
-        return  AppError(AppError.Code.ServerError)
+        return AppError(AppError.Code.ServerError)
     }
 }

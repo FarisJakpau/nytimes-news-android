@@ -1,6 +1,6 @@
 package com.faris.newsapp.di
 
-import com.faris.newsapp.api.NewsApi
+import com.faris.newsapp.api.ArticlesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideNewsApi(retrofit: Retrofit): NewsApi {
-        return retrofit.create(NewsApi::class.java)
+    fun provideArticlesApi(retrofit: Retrofit): ArticlesApi {
+        return retrofit.create(ArticlesApi::class.java)
     }
 }
