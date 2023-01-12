@@ -9,11 +9,8 @@ class AppError(
     enum class Code
     {
         InvalidData,
-        DataSerialization,
         Network,
         BadRequest,
-
-        EmptySearchResult,
 
         // HTTP server error with code 500.
         ServerError

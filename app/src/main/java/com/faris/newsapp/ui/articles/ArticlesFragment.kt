@@ -2,6 +2,7 @@ package com.faris.newsapp.ui.articles
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -70,6 +71,7 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
 
                     launch {
                         viewModel.errorFlow.collect{
+                            Toast.makeText(this@ArticlesFragment.context, it.code.name, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

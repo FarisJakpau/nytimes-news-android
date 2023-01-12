@@ -4,6 +4,7 @@ import android.util.Log
 import com.faris.newsapp.models.AppError
 import retrofit2.Response
 import com.faris.newsapp.models.Result
+import com.faris.newsapp.models.events.NoInternetException
 import com.faris.newsapp.utils.guard
 import com.google.gson.JsonParseException
 
@@ -18,15 +19,24 @@ class NetworkRequestManager {
                 }
                 Result.Success(body)
             } else {
+//                Log.e("Error Main", response.code().toString())
                 handleFailureInResponse(response)
             }
         } catch (exception: Exception) {
+//            Log.e("Error", exception.message.toString())
             handleFailureInRequest(exception)
         }
     }
 
     inline fun <reified T> handleFailureInRequest(throwable: Throwable): Result<T> {
-        return Result.Failure(AppError(AppError.Code.InvalidData, throwable))
+        return when(throwable) {
+            is NoInternetException -> {
+                Result.Failure(AppError(AppError.Code.Network, throwable))
+            }
+            else -> {
+                Result.Failure(AppError(AppError.Code.InvalidData, throwable))
+            }
+        }
     }
 
     inline fun <reified T> handleFailureInResponse(response: Response<T>): Result<T> {
@@ -34,6 +44,14 @@ class NetworkRequestManager {
     }
 
     fun <T> getAppError(response: Response<T>): AppError {
-        return AppError(AppError.Code.ServerError)
+
+        return when(response.code()) {
+            500 -> {
+                AppError(AppError.Code.ServerError)
+            }
+            else -> {
+                AppError(AppError.Code.BadRequest)
+            }
+        }
     }
 }

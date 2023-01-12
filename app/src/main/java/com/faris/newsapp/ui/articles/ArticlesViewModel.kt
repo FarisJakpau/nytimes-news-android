@@ -1,7 +1,9 @@
 package com.faris.newsapp.ui.articles
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.faris.newsapp.models.AppError
 import com.faris.newsapp.models.Article
 import com.faris.newsapp.models.PopularMenu
 import com.faris.newsapp.models.Result
@@ -22,7 +24,7 @@ class ArticlesViewModel @Inject constructor(
     private val _articlesFlow = MutableStateFlow<List<Article>>(mutableListOf())
     var articleFlow = _articlesFlow.asStateFlow()
 
-    private val _errorFlow = MutableSharedFlow<Throwable>()
+    private val _errorFlow = MutableSharedFlow<AppError>()
     var errorFlow = _errorFlow.asSharedFlow()
 
     private val _isLoadingFlow = MutableStateFlow(true)
@@ -41,7 +43,8 @@ class ArticlesViewModel @Inject constructor(
                     _articlesFlow.emit(result.value.results)
                 }
                 is Result.Failure -> {
-                    _errorFlow.emit(result.error)
+                    val error = result.error as AppError
+                    _errorFlow.emit(error)
                 }
             }
 
@@ -55,7 +58,8 @@ class ArticlesViewModel @Inject constructor(
 
             when(val result = articlesStore.searchArticles(query)) {
                 is Result.Failure -> {
-                    _errorFlow.emit(result.error)
+                    val error = result.error as AppError
+                    _errorFlow.emit(error)
                 }
                 is Result.Success -> {
                     val data = result.value.response.docs
