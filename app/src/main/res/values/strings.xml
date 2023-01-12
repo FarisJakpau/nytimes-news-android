@@ -9,4 +9,7 @@
     <string name="most_emailed">Most Emailed</string>
     <string name="search_articles_placeholder">Search articles here…</string>
     <string name="search_not_found">Search not found</string>
+    <string name="location_permission_denied">Location Permission Denied</string>
+    <string name="location_permission_rationale">Location permission required to show current location</string>
+    <string name="please_enable_location">Please enable Location</string>
 </resources>
