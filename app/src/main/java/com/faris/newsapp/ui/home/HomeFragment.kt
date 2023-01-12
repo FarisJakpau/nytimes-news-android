@@ -45,7 +45,7 @@ class HomeFragment: Fragment(R.layout.fragment_home), HomeMenuAdapter.Listener{
         when(menu) {
             is PopularMenu -> {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToArticlesFragment(
-                    menu
+                    articlesType =  menu,
                 ))
             }
             is SearchMenu -> {

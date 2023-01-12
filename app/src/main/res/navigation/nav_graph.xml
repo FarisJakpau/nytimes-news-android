@@ -14,7 +14,11 @@
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_homeFragment_to_articlesFragment"
-            app:destination="@id/articlesFragment"/>
+            app:destination="@id/articlesFragment">
+            <argument
+                android:name="articlesType"
+                app:argType="com.faris.newsapp.models.PopularMenu"/>
+        </action>
     </fragment>
 
     <fragment
@@ -23,15 +27,16 @@
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_articlesFragment"
-            app:destination="@id/articlesFragment" />
+            app:destination="@id/articlesFragment" >
+            <argument
+                android:name="searchInput"
+                app:argType="string"
+                app:nullable="true"/>
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/articlesFragment"
         android:name="com.faris.newsapp.ui.articles.ArticlesFragment"
-        tools:layout="@layout/fragment_articles">
-        <argument
-            android:name="articlesType"
-            app:argType="com.faris.newsapp.models.PopularMenu"/>
-    </fragment>
+        tools:layout="@layout/fragment_articles"/>
 </navigation>

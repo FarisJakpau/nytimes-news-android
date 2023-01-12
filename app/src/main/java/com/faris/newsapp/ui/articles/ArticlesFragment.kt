@@ -28,14 +28,29 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
         ArticlesAdapter()
     }
 
-    private val navArgs: ArticlesFragmentArgs by navArgs()
-    private val articlesType: PopularMenu
-        get() = navArgs.articlesType
+    private val articlesType: PopularMenu?
+        get() {
+            val data = arguments?.get("articlesType")
+            if (data != null) {
+                return data as PopularMenu
+            }
+            return null
+        }
+
+    private val searchInput: String?
+        get() = arguments?.getString("searchInput")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentArticlesBinding.bind(view)
-        viewModel.getArticles(articlesType)
+
+        articlesType?.let {
+            viewModel.getArticles(it)
+        }
+
+        searchInput?.let {
+            viewModel.getArticles(PopularMenu.MostEmailed)
+        }
 
         with(binding) {
             recyclerView.adapter = adapter

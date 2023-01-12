@@ -14,4 +14,7 @@ interface ArticlesApi {
 
     @GET("mostpopular/v2/emailed/7.json?api-key=Td9ImahThDlNibEg6VJMhirBKVG2XxJS")
     suspend fun getMostEmailed(): Response<BaseResponse<Article>>
+
+    @GET("")
+    suspend fun searchArticles(): Response<BaseResponse<Article>>
 }
