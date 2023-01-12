@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.faris.newsapp.R
 import com.faris.newsapp.databinding.FragmentSearchBinding
-import com.faris.newsapp.models.PopularMenu
 
 class SearchFragment: Fragment(R.layout.fragment_search) {
 

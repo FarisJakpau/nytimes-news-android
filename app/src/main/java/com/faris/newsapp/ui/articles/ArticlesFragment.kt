@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.navArgs
 import com.faris.newsapp.R
 import com.faris.newsapp.databinding.FragmentArticlesBinding
 import com.faris.newsapp.models.PopularMenu
@@ -49,7 +48,7 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
         }
 
         searchInput?.let {
-            viewModel.getArticles(PopularMenu.MostEmailed)
+            viewModel.searchArticles(it)
         }
 
         with(binding) {
@@ -73,7 +72,6 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
                         viewModel.errorFlow.collect{
                         }
                     }
-
                 }
             }
         }

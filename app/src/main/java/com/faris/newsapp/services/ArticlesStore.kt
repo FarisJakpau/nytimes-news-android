@@ -20,4 +20,8 @@ class ArticlesStore @Inject constructor(
     suspend fun getMostEmailed()  = networkRequestManager.apiRequest {
         articlesApi.getMostEmailed()
     }
+
+    suspend fun searchArticles(query: String) = networkRequestManager.apiRequest {
+        articlesApi.searchArticles(query)
+    }
 }

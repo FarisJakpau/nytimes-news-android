@@ -49,4 +49,29 @@ class ArticlesViewModel @Inject constructor(
         }
     }
 
+    fun searchArticles(query: String) {
+        viewModelScope.launch {
+            _isLoadingFlow.emit(true)
+
+            when(val result = articlesStore.searchArticles(query)) {
+                is Result.Failure -> {
+                    _errorFlow.emit(result.error)
+                }
+                is Result.Success -> {
+                    val data = result.value.response.docs
+                    val tempArticles: ArrayList<Article> = arrayListOf()
+                    data.forEach { searchedArticle ->
+                        tempArticles.add(Article(
+                            title = searchedArticle.snippet,
+                            publishedDate = searchedArticle.publishedDate.toString()
+                        ))
+                    }
+                    _articlesFlow.emit(tempArticles)
+                }
+            }
+
+            _isLoadingFlow.emit(false)
+        }
+    }
+
 }
