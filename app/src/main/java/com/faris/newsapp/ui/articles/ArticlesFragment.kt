@@ -13,6 +13,7 @@ import com.faris.newsapp.R
 import com.faris.newsapp.databinding.FragmentArticlesBinding
 import com.faris.newsapp.models.PopularMenu
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,6 +27,10 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
 
     private val adapter: ArticlesAdapter by lazy {
         ArticlesAdapter()
+    }
+
+    private val searchAdapter: SearchArticlesAdapter by lazy {
+        SearchArticlesAdapter()
     }
 
     private val articlesType: PopularMenu?
@@ -44,16 +49,16 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentArticlesBinding.bind(view)
 
-        articlesType?.let {
-            viewModel.getArticles(it)
-        }
-
-        searchInput?.let {
-            viewModel.searchArticles(it)
-        }
-
         with(binding) {
-            recyclerView.adapter = adapter
+            articlesType?.let {
+                recyclerView.adapter = adapter
+                viewModel.getArticles(it)
+            }
+
+            searchInput?.let {
+                recyclerView.adapter = searchAdapter
+                viewModel.searchArticles(it)
+            }
 
             viewLifecycleOwner.lifecycleScope.launch{
                 viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -72,6 +77,12 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
                     launch {
                         viewModel.errorFlow.collect{
                             Toast.makeText(this@ArticlesFragment.context, it.code.name, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    launch {
+                        viewModel.searchResult.collect{
+                            searchAdapter.submitData(it)
                         }
                     }
                 }

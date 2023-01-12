@@ -1,18 +1,12 @@
 package com.faris.newsapp.ui.articles
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.faris.newsapp.models.AppError
-import com.faris.newsapp.models.Article
-import com.faris.newsapp.models.PopularMenu
-import com.faris.newsapp.models.Result
+import androidx.paging.PagingData
+import com.faris.newsapp.models.*
 import com.faris.newsapp.services.ArticlesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,6 +23,8 @@ class ArticlesViewModel @Inject constructor(
 
     private val _isLoadingFlow = MutableStateFlow(true)
     var isLoadingFlow = _isLoadingFlow.asStateFlow()
+
+    var searchResult: Flow<PagingData<SearchArticle>> = flow { }
 
     fun getArticles(popularMenu: PopularMenu) {
         viewModelScope.launch {
@@ -56,23 +52,7 @@ class ArticlesViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoadingFlow.emit(true)
 
-            when(val result = articlesStore.searchArticles(query)) {
-                is Result.Failure -> {
-                    val error = result.error as AppError
-                    _errorFlow.emit(error)
-                }
-                is Result.Success -> {
-                    val data = result.value.response.docs
-                    val tempArticles: ArrayList<Article> = arrayListOf()
-                    data.forEach { searchedArticle ->
-                        tempArticles.add(Article(
-                            title = searchedArticle.snippet,
-                            publishedDate = searchedArticle.publishedDate.toString()
-                        ))
-                    }
-                    _articlesFlow.emit(tempArticles)
-                }
-            }
+            searchResult = articlesStore.searchArticles(query)
 
             _isLoadingFlow.emit(false)
         }

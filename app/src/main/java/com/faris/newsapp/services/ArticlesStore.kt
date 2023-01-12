@@ -1,5 +1,7 @@
 package com.faris.newsapp.services
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.faris.newsapp.api.ArticlesApi
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,7 +23,16 @@ class ArticlesStore @Inject constructor(
         articlesApi.getMostEmailed()
     }
 
-    suspend fun searchArticles(query: String) = networkRequestManager.apiRequest {
-        articlesApi.searchArticles(query)
-    }
+    fun searchArticles(query: String) =
+        Pager(
+            config = PagingConfig(
+                pageSize = 10
+            ),
+            pagingSourceFactory = {
+                ArticlesPagingSource(
+                    articlesApi = articlesApi,
+                    query = query
+                )
+            }
+        ).flow
 }

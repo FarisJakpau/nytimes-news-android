@@ -19,6 +19,7 @@ interface ArticlesApi {
 
     @GET("search/v2/articlesearch.json?&api-key=Td9ImahThDlNibEg6VJMhirBKVG2XxJS")
     suspend fun searchArticles(
-        @Query("q") query: String
+        @Query("q") query: String,
+        @Query("page") page: Int
     ): Response<BaseResponse<SearchResponse>>
 }
