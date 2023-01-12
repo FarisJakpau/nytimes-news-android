@@ -93,6 +93,10 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
                         if (loadState.refresh is LoadState.Loading) {
                             progressBar.isVisible = true
                         }
+                        else if (loadState.refresh is LoadState.Error) {
+                            progressBar.isVisible = false
+                            Toast.makeText(this@ArticlesFragment.context, "error", Toast.LENGTH_SHORT).show()
+                        }
                         else{
                             progressBar.isVisible = false
                             if (loadState.append is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
