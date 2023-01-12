@@ -3,6 +3,7 @@ package com.faris.newsapp.ui.articles
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.faris.newsapp.models.*
 import com.faris.newsapp.services.ArticlesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,11 +51,7 @@ class ArticlesViewModel @Inject constructor(
 
     fun searchArticles(query: String) {
         viewModelScope.launch {
-            _isLoadingFlow.emit(true)
-
-            searchResult = articlesStore.searchArticles(query)
-
-            _isLoadingFlow.emit(false)
+            searchResult = articlesStore.searchArticles(query).cachedIn(viewModelScope)
         }
     }
 

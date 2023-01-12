@@ -8,4 +8,5 @@
     <string name="most_shared">Most Shared</string>
     <string name="most_emailed">Most Emailed</string>
     <string name="search_articles_placeholder">Search articles here…</string>
+    <string name="search_not_found">Search not found</string>
 </resources>

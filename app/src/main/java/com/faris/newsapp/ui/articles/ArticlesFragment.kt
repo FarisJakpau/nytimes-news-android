@@ -1,6 +1,7 @@
 package com.faris.newsapp.ui.articles
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -9,11 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import com.faris.newsapp.R
 import com.faris.newsapp.databinding.FragmentArticlesBinding
 import com.faris.newsapp.models.PopularMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -70,7 +73,7 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
 
                     launch {
                         viewModel.isLoadingFlow.collect{
-                            loadingTextView.isVisible = it
+                            progressBar.isVisible = it
                         }
                     }
 
@@ -83,6 +86,20 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
                     launch {
                         viewModel.searchResult.collect{
                             searchAdapter.submitData(it)
+                        }
+                    }
+
+                    searchAdapter.loadStateFlow.collectLatest { loadState ->
+                        if (loadState.refresh is LoadState.Loading) {
+                            progressBar.isVisible = true
+                        }
+                        else{
+                            progressBar.isVisible = false
+                            if (loadState.append is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
+                                recyclerView.isVisible = searchAdapter.itemCount > 0
+                                errorTextView.isVisible = searchAdapter.itemCount < 1
+                                errorTextView.text = context?.getString(R.string.search_not_found)
+                            }
                         }
                     }
                 }

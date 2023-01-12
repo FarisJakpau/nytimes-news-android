@@ -1,12 +1,10 @@
 package com.faris.newsapp.services
 
-import android.util.Log
 import com.faris.newsapp.models.AppError
 import retrofit2.Response
 import com.faris.newsapp.models.Result
 import com.faris.newsapp.models.events.NoInternetException
 import com.faris.newsapp.utils.guard
-import com.google.gson.JsonParseException
 
 class NetworkRequestManager {
     suspend inline fun <reified T> apiRequest(crossinline apiCall: suspend () -> Response<T>): Result<T> {
@@ -19,11 +17,9 @@ class NetworkRequestManager {
                 }
                 Result.Success(body)
             } else {
-//                Log.e("Error Main", response.code().toString())
                 handleFailureInResponse(response)
             }
         } catch (exception: Exception) {
-//            Log.e("Error", exception.message.toString())
             handleFailureInRequest(exception)
         }
     }

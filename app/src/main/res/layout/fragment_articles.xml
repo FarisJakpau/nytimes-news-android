@@ -5,17 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/loadingTextView"
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="30sp"
-        android:text="Loading"
         tool:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,6 +20,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tool:listitem="@layout/item_article"
+        tool:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        android:visibility="gone"
+        tool:text="No Data"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,11 +21,10 @@ class ArticlesPagingSource (
             val response = articlesApi.searchArticles(
                 query = query,
                 page = pageIndex
-            ).body()
+            ).body()!!
 
-            val searchedArticles = response?.response
-
-            val nextKey = if(searchedArticles == null) {
+            val searchedArticles = response.response
+            val nextKey = if(searchedArticles.docs.isEmpty()) {
                 null
             } else {
                 pageIndex + 1
@@ -34,7 +33,7 @@ class ArticlesPagingSource (
             LoadResult.Page(
                 nextKey = nextKey,
                 prevKey = if (pageIndex == ARTICLES_STARTING_INDEX) null else pageIndex,
-                data = searchedArticles?.docs ?: mutableListOf()
+                data = searchedArticles.docs
             )
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
