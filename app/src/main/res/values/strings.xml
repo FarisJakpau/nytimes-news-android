@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">News App</string>
+    <string name="search_article">Search Articles</string>
+    <string name="search">Search</string>
+    <string name="popular">Popular</string>
+    <string name="articles">Articles</string>
+    <string name="most_viewed">Most Viewed</string>
+    <string name="most_shared">Most Shared</string>
+    <string name="most_emailed">Most Emailed</string>
+    <string name="search_articles_placeholder">Search articles here…</string>
 </resources>
