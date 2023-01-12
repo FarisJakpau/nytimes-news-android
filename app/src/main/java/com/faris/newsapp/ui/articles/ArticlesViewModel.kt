@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.faris.newsapp.models.*
 import com.faris.newsapp.services.ArticlesStore
+import com.faris.newsapp.services.database.ArticlesDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticlesViewModel @Inject constructor(
-    private val articlesStore: ArticlesStore
+    private val articlesStore: ArticlesStore,
+    private val articlesDao: ArticlesDao
 ) : ViewModel(){
 
     private val _articlesFlow = MutableStateFlow<List<Article>>(mutableListOf())
@@ -37,11 +39,20 @@ class ArticlesViewModel @Inject constructor(
                 PopularMenu.MostEmailed -> articlesStore.getMostEmailed()
             }) {
                 is Result.Success -> {
-                    _articlesFlow.emit(result.value.results)
+                    val articles = result.value.results
+                    articles.forEach { it.articleMenu = popularMenu }
+
+                    articlesDao.insertOrUpdate(articles)
+                    _articlesFlow.emit(articles)
                 }
                 is Result.Failure -> {
-                    val error = result.error as AppError
-                    _errorFlow.emit(error)
+                    val offlineArticles = articlesDao.getArticles(popularMenu)
+                    if (offlineArticles.isEmpty()) {
+                        val error = result.error as AppError
+                        _errorFlow.emit(error)
+                    } else {
+                        _articlesFlow.emit(offlineArticles)
+                    }
                 }
             }
 
