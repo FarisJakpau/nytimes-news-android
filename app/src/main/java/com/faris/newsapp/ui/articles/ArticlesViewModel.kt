@@ -3,6 +3,7 @@ package com.faris.newsapp.ui.articles
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.faris.newsapp.models.Article
+import com.faris.newsapp.models.PopularMenu
 import com.faris.newsapp.models.Result
 import com.faris.newsapp.services.ArticlesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,11 +28,15 @@ class ArticlesViewModel @Inject constructor(
     private val _isLoadingFlow = MutableStateFlow(true)
     var isLoadingFlow = _isLoadingFlow.asStateFlow()
 
-    fun getMostPopular() {
+    fun getArticles(popularMenu: PopularMenu) {
         viewModelScope.launch {
             _isLoadingFlow.emit(true)
 
-            when(val result = articlesStore.getMostPopular()) {
+            when(val result = when(popularMenu) {
+                PopularMenu.MostViewed -> articlesStore.getMostViewed()
+                PopularMenu.MostShared -> articlesStore.getMostShared()
+                PopularMenu.MostEmailed -> articlesStore.getMostEmailed()
+            }) {
                 is Result.Success -> {
                     _articlesFlow.emit(result.value.results)
                 }
@@ -43,4 +48,5 @@ class ArticlesViewModel @Inject constructor(
             _isLoadingFlow.emit(false)
         }
     }
+
 }

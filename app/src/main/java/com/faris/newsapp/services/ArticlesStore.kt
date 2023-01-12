@@ -9,7 +9,15 @@ class ArticlesStore @Inject constructor(
     private val networkRequestManager: NetworkRequestManager,
     private val articlesApi: ArticlesApi
 ) {
-    suspend fun getMostPopular()  = networkRequestManager.apiRequest {
-        articlesApi.getMostPopular()
+    suspend fun getMostViewed()  = networkRequestManager.apiRequest {
+        articlesApi.getMostViewed()
+    }
+
+    suspend fun getMostShared()  = networkRequestManager.apiRequest {
+        articlesApi.getMostShared()
+    }
+
+    suspend fun getMostEmailed()  = networkRequestManager.apiRequest {
+        articlesApi.getMostEmailed()
     }
 }

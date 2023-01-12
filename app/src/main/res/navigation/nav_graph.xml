@@ -14,7 +14,7 @@
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_homeFragment_to_articlesFragment"
-            app:destination="@id/articlesFragment" />
+            app:destination="@id/articlesFragment"/>
     </fragment>
 
     <fragment
@@ -29,5 +29,9 @@
     <fragment
         android:id="@+id/articlesFragment"
         android:name="com.faris.newsapp.ui.articles.ArticlesFragment"
-        tools:layout="@layout/fragment_articles"/>
+        tools:layout="@layout/fragment_articles">
+        <argument
+            android:name="articlesType"
+            app:argType="com.faris.newsapp.models.PopularMenu"/>
+    </fragment>
 </navigation>

@@ -6,6 +6,12 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface ArticlesApi {
+    @GET("mostpopular/v2/viewed/7.json?api-key=Td9ImahThDlNibEg6VJMhirBKVG2XxJS")
+    suspend fun getMostViewed(): Response<BaseResponse<Article>>
+
+    @GET("mostpopular/v2/shared/7.json?api-key=Td9ImahThDlNibEg6VJMhirBKVG2XxJS")
+    suspend fun getMostShared(): Response<BaseResponse<Article>>
+
     @GET("mostpopular/v2/emailed/7.json?api-key=Td9ImahThDlNibEg6VJMhirBKVG2XxJS")
-    suspend fun getMostPopular(): Response<BaseResponse<Article>>
+    suspend fun getMostEmailed(): Response<BaseResponse<Article>>
 }

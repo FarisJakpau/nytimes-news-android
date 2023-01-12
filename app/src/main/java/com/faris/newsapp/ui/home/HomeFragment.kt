@@ -44,15 +44,9 @@ class HomeFragment: Fragment(R.layout.fragment_home), HomeMenuAdapter.Listener{
     override fun menuSelected(menu: Any) {
         when(menu) {
             is PopularMenu -> {
-                when(menu) {
-                    PopularMenu.MostViewed -> {
-                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToArticlesFragment())
-                    }
-                    PopularMenu.MostShared -> {
-                    }
-                    PopularMenu.MostEmailed -> {
-                    }
-                }
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToArticlesFragment(
+                    menu
+                ))
             }
             is SearchMenu -> {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
