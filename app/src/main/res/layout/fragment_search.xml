@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/item_toolbar"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         app:boxStrokeWidth="2dp"

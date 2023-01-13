@@ -46,6 +46,8 @@ class HomeFragment: Fragment(R.layout.fragment_home), HomeMenuAdapter.Listener, 
         locationManager = this.context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         with(binding) {
+            toolbar.textView.text = "NYT"
+
             popularAdapter.items = PopularMenu.values().toList()
             searchAdapter.items = SearchMenu.values().toList()
 

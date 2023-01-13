@@ -19,6 +19,7 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         _binding = FragmentSearchBinding.bind(view)
 
         with(binding) {
+            toolbar.textView.text = context?.getString(R.string.search)
 
             searchEditText.doAfterTextChanged {
                 searchButton.isEnabled = it.toString().isNotEmpty()

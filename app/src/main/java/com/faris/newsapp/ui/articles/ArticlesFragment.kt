@@ -53,6 +53,8 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
         _binding = FragmentArticlesBinding.bind(view)
 
         with(binding) {
+            toolbar.textView.text = context?.getString(R.string.articles)
+
             articlesType?.let {
                 recyclerView.adapter = adapter
                 viewModel.getArticles(it)
