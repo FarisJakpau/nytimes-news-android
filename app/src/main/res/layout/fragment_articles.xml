@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         tool:listitem="@layout/item_article"
         tool:visibility="gone"
+        android:layout_margin="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
