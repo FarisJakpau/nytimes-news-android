@@ -79,7 +79,7 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
 
                     launch {
                         viewModel.errorFlow.collect{
-                            Toast.makeText(this@ArticlesFragment.context, it.code.name, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ArticlesFragment.context, this@ArticlesFragment.context?.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                         }
                     }
 
@@ -95,7 +95,7 @@ class ArticlesFragment: Fragment(R.layout.fragment_articles) {
                         }
                         else if (loadState.refresh is LoadState.Error) {
                             progressBar.isVisible = false
-                            Toast.makeText(this@ArticlesFragment.context, "error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ArticlesFragment.context, this@ArticlesFragment.context?.getText(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
                         }
                         else{
                             progressBar.isVisible = false

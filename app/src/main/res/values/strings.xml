@@ -12,4 +12,5 @@
     <string name="location_permission_denied">Location Permission Denied</string>
     <string name="location_permission_rationale">Location permission required to show current location</string>
     <string name="please_enable_location">Please enable Location</string>
+    <string name="something_went_wrong">Something went wrong, please try again</string>
 </resources>
